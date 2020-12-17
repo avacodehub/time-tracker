@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useStore from "./Store";
-import {
-  Box,
-  HStack,
-  Text,
-  Button,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, HStack, Text, Button, Heading } from "@chakra-ui/react";
 
 function Project(props) {
   const { project } = props;
@@ -25,20 +19,24 @@ function Project(props) {
       newProject.time = newTime;
       updateProject(newProject);
       setActiveProject(null);
+      setSessionTime(0);
     } else {
       if (activeProject) {
         if (!confirm("Do you want to change active project?")) return;
       }
-      const savingActiveProject = { ...activeProject}
-      savingActiveProject.time = savingActiveProject.time + (Date.now() - savingActiveProject.sessionStarted)
+      const savingActiveProject = { ...activeProject };
+      savingActiveProject.time =
+        savingActiveProject.time +
+        (Date.now() - savingActiveProject.sessionStarted);
       savingActiveProject.isRunning = false;
       updateProject(savingActiveProject);
+      setSessionTime(0);
 
       const newProject = { ...project };
       newProject.sessionStarted = Date.now();
       newProject.isRunning = true;
       updateProject(newProject);
-      setActiveProject(newProject)
+      setActiveProject(newProject);
     }
   }
 
