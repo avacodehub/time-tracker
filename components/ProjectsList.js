@@ -1,7 +1,8 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import React, { useState, useRef, useEffect } from "react";
 import Project from "./Project";
-import useStore from "./Store";
+import useStore from "../Store/Store";
+import EditTime from "./EditTIme";
 
 const LOCAL_STORAGE_KEY_PROJECTS = "0projecttracker_projects";
 const LOCAL_STORAGE_KEY_ACTIVE = "0projecttracker_active";
@@ -60,6 +61,7 @@ function ProjectsList() {
             )
           : null}
       </SimpleGrid>
+      <EditTime />
     </>
   );
 }

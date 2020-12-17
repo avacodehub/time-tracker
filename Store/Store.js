@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 const useStore = create((set) => ({
   projects: [],
   activeProject: null,
+  beingEditProject: null,
   setProjects: (projects) => set({ projects }),
   addProject: (name) =>
     set((state) => ({
@@ -35,6 +36,7 @@ const useStore = create((set) => ({
     })),
 
   setActiveProject: (project) => set({ activeProject: project }),
+  setBeingEditProject: (project) => set({ beingEditProject: project }),
 }));
 
 export default useStore;

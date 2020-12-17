@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useStore from "./Store";
+import useStore from "../Store/Store";
 import { Box, HStack, Text, Button, Heading } from "@chakra-ui/react";
 
 function Project(props) {
@@ -8,8 +8,13 @@ function Project(props) {
   const updateProject = useStore((state) => state.updateProject);
   const activeProject = useStore((state) => state.activeProject);
   const setActiveProject = useStore((state) => state.setActiveProject);
+  const setBeingEditProject = useStore((state) => state.setBeingEditProject);
 
   const [sessionTime, setSessionTime] = useState(0);
+
+  function handleEdit() {
+    setBeingEditProject(project);
+  }
 
   function handleStartStop() {
     if (project.isRunning) {
@@ -87,6 +92,9 @@ function Project(props) {
         <Box alignSelf="start">
           <Button onClick={handleStartStop} width="100%" size="lg">
             {project.isRunning ? "STOP" : "START"}
+          </Button>
+          <Button onClick={handleEdit} width="100%" size="lg">
+            EDIT TIME
           </Button>
         </Box>
       </HStack>

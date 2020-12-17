@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/react";
 import Head from "next/head";
 import ProjectsList from "../components/ProjectsList";
-import useStore from '../components/Store'
+import useStore from '../Store/Store'
 
 const Home = () => {
   const projects = useStore(s => s.projects)
