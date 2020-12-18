@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Text, Button, Input } from "@chakra-ui/react";
 import React, { useState, useRef, useEffect } from "react";
 import Project from "./Project";
 import useStore from "../Store/Store";
@@ -19,13 +19,12 @@ function ProjectsList() {
     const localProjects = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEY_PROJECTS)
     );
-    if (localProjects) setProjects(localProjects)
+    if (localProjects) setProjects(localProjects);
 
     const localActive = JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEY_ACTIVE)
     );
-    if (localActive) setActiveProject(localActive)
-
+    if (localActive) setActiveProject(localActive);
   }, []);
 
   useEffect(() => {
@@ -33,7 +32,10 @@ function ProjectsList() {
   }, [projects]);
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY_ACTIVE, JSON.stringify(activeProject));
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY_ACTIVE,
+      JSON.stringify(activeProject)
+    );
   }, [activeProject]);
 
   const inputProjectName = useRef("");
@@ -47,20 +49,22 @@ function ProjectsList() {
 
   return (
     <>
-      <label>New project...</label>
-      <input
-        ref={inputProjectName}
-        // onChange={handleAddProject}
-      />
+      <div className="tools">
+        <Text fontSize="lg">New project:</Text>
+        <Input
+          ref={inputProjectName}
+          // onChange={handleAddProject}
+        />
 
-      <button onClick={handleAddProject}>Create</button>
-      <SimpleGrid columns={4} spacing={10}>
+        <Button onClick={handleAddProject}>Create</Button>
+      </div>
+      <section className="projectsGrid">
         {projects.length > 0
-          ? projects.map((p) =>
-              {if (p) return <Project key={p.id} project={p} />}
-            )
+          ? projects.map((p) => {
+              if (p) return <Project key={p.id} project={p} />;
+            })
           : null}
-      </SimpleGrid>
+      </section>
       <EditTime />
     </>
   );

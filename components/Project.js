@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import useStore from "../Store/Store";
-import { Box, HStack, Text, Button, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  Heading,
+  ButtonGroup,
+} from "@chakra-ui/react";
 
 function Project(props) {
   const { project } = props;
   console.log(JSON.stringify(project));
   const updateProject = useStore((state) => state.updateProject);
+  const deleteProject = useStore((state) => state.deleteProject);
   const activeProject = useStore((state) => state.activeProject);
   const setActiveProject = useStore((state) => state.setActiveProject);
   const setBeingEditProject = useStore((state) => state.setBeingEditProject);
@@ -14,6 +22,10 @@ function Project(props) {
 
   function handleEdit() {
     setBeingEditProject(project);
+  }
+
+  function handleDelete() {
+    deleteProject(project);
   }
 
   function handleStartStop() {
@@ -73,31 +85,30 @@ function Project(props) {
   }
 
   return (
-    <div>
-      <HStack flexWrap="wrap" maxW="400px" m={(15, 10)}>
-        <Box>
-          <Text fontSize="sm">Project Name:</Text>
-          <Text fontSize="3xl">{project.name}</Text>
+    <div className="card">
+      <Box>
+        <Text fontSize="sm">Project Name:</Text>
+        <Heading fontSize="3xl">{project.name}</Heading>
 
-          {/* <Text>OrderedBy</Text>
+        {/* <Text>OrderedBy</Text>
         <Text>{orderedBy}</Text> */}
 
-          <Text>Time:</Text>
-          <Heading as="h1">
-            {msToTime(
-              project.isRunning ? project.time + sessionTime : project.time
-            )}
-          </Heading>
-        </Box>
-        <Box alignSelf="start">
-          <Button onClick={handleStartStop} width="100%" size="lg">
-            {project.isRunning ? "STOP" : "START"}
-          </Button>
-          <Button onClick={handleEdit} width="100%" size="lg">
-            EDIT TIME
-          </Button>
-        </Box>
-      </HStack>
+        <Text mt={4}>Time:</Text>
+        <Heading as="h1">
+          {msToTime(
+            project.isRunning ? project.time + sessionTime : project.time
+          )}
+        </Heading>
+      </Box>
+      <Flex mt={4} justifyContent="space-between">
+        <Button size="sm" colorScheme={project.isRunning ? "red" : "teal"} onClick={handleStartStop}>
+          {project.isRunning ? "STOP" : "START"}
+        </Button>
+        <ButtonGroup size="sm" isAttached variant="outline">
+          <Button onClick={handleEdit}>EDIT TIME</Button>
+          <Button onClick={handleDelete}>DELETE</Button>
+        </ButtonGroup>
+      </Flex>
     </div>
   );
 }
