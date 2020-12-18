@@ -5,6 +5,8 @@ const useStore = create((set) => ({
   projects: [],
   activeProject: null,
   beingEditProject: null,
+  watchList: [],
+
   setProjects: (projects) => set({ projects }),
   addProject: (name) =>
     set((state) => ({
@@ -37,6 +39,54 @@ const useStore = create((set) => ({
 
   setActiveProject: (project) => set({ activeProject: project }),
   setBeingEditProject: (project) => set({ beingEditProject: project }),
+  // WATCH LIST SECTION
+  setWatchList: (watchList) => set({ watchList }),
+  addWatch: (name, customId) =>
+    set((state) => ({
+      watchList: [
+        ...state.watchList,
+        {
+          id: uuidv4(),
+          name,
+          customId,
+          time: 0,
+        },
+      ],
+    })),
+  deleteWatch: (watch) =>
+    set((state) => ({
+      watchList: state.watchList.filter((p) => p.id !== watch.id),
+    })),
+  fetchWatch: async (watch) => {
+    const API =
+      "https://us-central1-xamarin-tracker.cloudfunctions.net/app/api/read/";
+    const API_GET = API + watch.customId;
+    const response = await fetch(API_GET);
+    if (response.status < 200 || response.status > 299) {
+      alert("Response is not OK");
+      return;
+    }
+    let json;
+    try {
+      json = await response.json();
+    } catch {
+      alert("No such ID");
+      return;
+    }
+    const newWatch = { ...watch, time: json.time, lastSync: Date.now() };
+
+    set((state) => {
+      const newWatchList = state.watchList.map((p) => {
+        if (p) {
+          if (p.id === newWatch.id) {
+            return newWatch;
+          } else return p;
+        }
+      });
+      return { watchList: newWatchList };
+    });
+  },
+  // END WATCHLIST SECTION
 }));
 
 export default useStore;
