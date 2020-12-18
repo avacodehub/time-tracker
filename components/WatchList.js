@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, Input, Button } from "@chakra-ui/react";
 import React, { useRef, useEffect } from "react";
 import Watch from "./Watch";
 import useStore from "../Store/Store";
@@ -38,23 +38,24 @@ function WatchList() {
 
   return (
     <>
+    <div className="tools">
       <label>New project...</label>
-      <input
+      <Input
         ref={inputProjectName}
       />
-      <input
+      <Input
         ref={inputProjectCustomId}
       />
 
-      <button onClick={handleAddProject}>Create</button>
-      <SimpleGrid columns={4} spacing={10}>
+      <Button onClick={handleAddProject}>Create</Button>
+      </div>
+      <section className="projectsGrid">
         {watchList.length > 0
           ? watchList.map((p) =>
               {if (p) return <Watch key={p.id} watch={p} />}
             )
           : null}
-      </SimpleGrid>
-      <EditTime />
+      </section>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import useStore from "../Store/Store";
-import { Box, HStack, Text, Button, Heading } from "@chakra-ui/react";
+import { Box, Flex, ButtonGroup, Text, Button, Heading } from "@chakra-ui/react";
 
 function Watch(props) {
   const { watch } = props;
@@ -17,27 +17,26 @@ function Watch(props) {
   }
 
   return (
-    <div>
-      <HStack flexWrap="wrap" maxW="400px" m={(15, 10)}>
+    <div className="card">
         <Box>
           <Text fontSize="sm">Project Name:</Text>
           <Text fontSize="3xl">{watch.name}</Text>
 
-          <Text>Custom ID</Text>
-          <Text>{watch.customId}</Text>
-
+<Flex flexDirection="row" alignItems="center" >
+          <Text fontSize="sm">Custom ID: </Text>
+          <Text fontSize="lg">{watch.customId}</Text>
+          </Flex>
           <Text>Time:</Text>
-          <Heading as="h1">{watch.time}</Heading>
+          <Heading fontSize="3xl">{watch.time}</Heading>
         </Box>
-        <Box alignSelf="start">
-          <Button onClick={handleSync} size="lg">
+        <ButtonGroup size="sm" mt={4} variant="outline">
+          <Button colorScheme="blue" onClick={handleSync}>
             SYNC
           </Button>
-          <Button onClick={handleDelete} size="lg">
+          <Button colorScheme="red" onClick={handleDelete}>
             DELETE
           </Button>
-        </Box>
-      </HStack>
+        </ButtonGroup>
     </div>
   );
 }
