@@ -30,86 +30,93 @@ export default function EditTime() {
     if (beingEditProject) setIsVisible(true);
   }, [beingEditProject]);
 
+  function handleCancel() {
+    setBeingEditProject(null);
+    setIsVisible(false);
+  }
+
   return (
     <>
       {!isVisible ? null : (
         <div className="overlay">
           <div className="overlay-content">
-          <h1>Edit time</h1>
-          <Formik
-            initialValues={{ hours: hours, minutes: minutes }}
-            validate={(values) => {
-              const errors = {};
-              if (values.minutes > 59) {
-                errors.minutes = "Minutes must be 0 - 59";
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              const newTime =
-                values.hours * 60 * 60 * 1000 + values.minutes * 60 * 1000;
-              const editedProject = { ...beingEditProject, time: newTime };
-              updateProject(editedProject);
+            <h1>Edit time</h1>
+            <Formik
+              initialValues={{ hours: hours, minutes: minutes }}
+              validate={(values) => {
+                const errors = {};
+                if (values.minutes > 59) {
+                  errors.minutes = "Minutes must be 0 - 59";
+                }
+                return errors;
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                const newTime =
+                  values.hours * 60 * 60 * 1000 + values.minutes * 60 * 1000;
+                const editedProject = { ...beingEditProject, time: newTime };
+                updateProject(editedProject);
 
-              setSubmitting(false);
-              setBeingEditProject(null);
-              setIsVisible(false);
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field type="number" name="hours">
-                  {({ field, form }) => (
-                    <FormControl
-                      isInvalid={form.errors.hours && form.touched.hours}
+                setSubmitting(false);
+                setBeingEditProject(null);
+                setIsVisible(false);
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <Field type="number" name="hours">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.hours && form.touched.hours}
+                      >
+                        <FormLabel htmlFor="hours">Hours</FormLabel>
+                        <Input
+                          {...field}
+                          id="hours"
+                          placeholder="Hours"
+                          autoComplete="off"
+                        />
+                        <FormErrorMessage>{form.errors.hours}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field type="number" name="minutes">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.minutes && form.touched.minutes}
+                      >
+                        <FormLabel htmlFor="minutes">Minutes</FormLabel>
+                        <Input
+                          {...field}
+                          id="minutes"
+                          placeholder="Minutes"
+                          autoComplete="off"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.minutes}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Flex justifyContent="flex-end" mt={4}>
+                    <Button
+                      type="submit"
+                      colorScheme="blue"
+                      isDisabled={isSubmitting}
                     >
-                      <FormLabel htmlFor="hours">Hours</FormLabel>
-                      <Input
-                        {...field}
-                        id="hours"
-                        placeholder="Hours"
-                        autoComplete="off"
-                      />
-                      <FormErrorMessage>{form.errors.hours}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field type="number" name="minutes">
-                  {({ field, form }) => (
-                    <FormControl
-                      isInvalid={form.errors.minutes && form.touched.minutes}
+                      Submit
+                    </Button>
+                    <Button
+                      onClick={handleCancel}
+                      colorScheme="red"
+                      variant="outline"
+                      isDisabled={isSubmitting}
                     >
-                      <FormLabel htmlFor="minutes">Minutes</FormLabel>
-                      <Input
-                        {...field}
-                        id="minutes"
-                        placeholder="Minutes"
-                        autoComplete="off"
-                      />
-                      <FormErrorMessage>{form.errors.minutes}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Flex justifyContent="flex-end" mt={4}>
-                  <Button
-                    type="submit"
-                    colorScheme="blue"
-                    isDisabled={isSubmitting}
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    type="cancel"
-                    colorScheme="red"
-                    variant="outline"
-                    isDisabled={isSubmitting}
-                  >
-                    Cancel
-                  </Button>
-                </Flex>
-              </Form>
-            )}
-          </Formik>
+                      Cancel
+                    </Button>
+                  </Flex>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       )}
