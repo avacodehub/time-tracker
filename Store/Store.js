@@ -10,13 +10,14 @@ const useStore = create((set) => ({
   isVisible_NewProject: false,
 
   setProjects: (projects) => set({ projects }),
-  addProject: (name) =>
+  addProject: (name, customId = null) =>
     set((state) => ({
       projects: [
         ...state.projects,
         {
           id: uuidv4(),
           name,
+          customId,
           time: 0,
           dateCreated: Date.now(),
           isRunning: false,

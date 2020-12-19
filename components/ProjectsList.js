@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Project from "./Project";
 import useStore from "../Store/Store";
 import EditTime from "./EditTIme";
+import NewProject from "./NewProject";
 
 const LOCAL_STORAGE_KEY_PROJECTS = "0projecttracker_projects";
 const LOCAL_STORAGE_KEY_ACTIVE = "0projecttracker_active";
@@ -12,7 +13,7 @@ function ProjectsList() {
   const activeProject = useStore((state) => state.activeProject);
   const setActiveProject = useStore((state) => state.setActiveProject);
   const updateProject = useStore((state) => state.updateProject);
-  const addProject = useStore((state) => state.addProject);
+  const setIsVisible_NewProject = useStore((state) => state.setIsVisible_NewProject);
   const setProjects = useStore((state) => state.setProjects);
 
   useEffect(() => {
@@ -38,25 +39,14 @@ function ProjectsList() {
     );
   }, [activeProject]);
 
-  const inputProjectName = useRef("");
-
-  const handleAddProject = () => {
-    const name = inputProjectName.current.value;
-    if (name === "") return;
-    addProject(name);
-    inputProjectName.current.value = "";
+  const handleNewProject = () => {
+    setIsVisible_NewProject(true)
   };
 
   return (
     <>
       <div className="tools">
-        <Text fontSize="lg">New project:</Text>
-        <Input
-          ref={inputProjectName}
-          // onChange={handleAddProject}
-        />
-
-        <Button onClick={handleAddProject}>Create</Button>
+        <Button onClick={handleNewProject}>Create new</Button>
       </div>
       <section className="projectsGrid">
         {projects.length > 0
@@ -65,6 +55,7 @@ function ProjectsList() {
             })
           : null}
       </section>
+      <NewProject />
       <EditTime />
     </>
   );
