@@ -1,5 +1,4 @@
-import {  Button } from "@chakra-ui/react";
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import Watch from "./Watch";
 import useStore from "../Store/Store";
 import NewWatch from "./NewWatch";
@@ -9,9 +8,6 @@ const LOCAL_STORAGE_KEY_WATCH_LIST = "0projecttracker_watch_list";
 function WatchList() {
   const watchList = useStore((state) => state.watchList);
   const setWatchList = useStore((state) => state.setWatchList);
-  const setIsVisible_NewWatch = useStore(
-    (state) => state.setIsVisible_NewWatch
-  );
 
   useEffect(() => {
     const localWatch = JSON.parse(
@@ -27,15 +23,8 @@ function WatchList() {
     );
   }, [watchList]);
 
-  const handleNewWatch = () => {
-    setIsVisible_NewWatch(true);
-  };
-
   return (
     <>
-      <div className="tools">
-        <Button onClick={handleNewWatch}>Create</Button>
-      </div>
       <section className="projectsGrid">
         {watchList.length > 0
           ? watchList.map((p) => {

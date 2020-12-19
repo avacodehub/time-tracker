@@ -1,24 +1,50 @@
+:root {
+  --clr-background: rgb(41, 32, 32);
+  --clr-text-primary: white;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
 .project {
   display: grid;
 }
 
 nav {
-  width: minmax(90%, 70em);
   display: flex;
   flex-direction: row;
   justify-self: stretch;
 }
 
+nav a {
+  padding: .5em 1em;
+  white-space: nowrap;
+}
+
+nav a:hover {
+  background-color: rgb(41, 32, 32);
+  color: white;
+}
+
 nav > div {
-  padding: 1em;
+  padding: 1em 0 0 0;
+  width: auto;
+}
+
+nav > div:nth-child(2) {
+  margin-left: auto;
 }
 
 .container {
-  padding: 0 5%;
+  /* background-color: var(--clr-background); */
+  /* color: var(--clr-text-primary); */
+  padding: 0 3%;
   display: grid;
   gap: 2em;
   grid-auto-columns: 1fr minmax(18em, auto);
-  grid-template-rows: minmax(2em, auto) 1fr minmax(2em, auto);
+  grid-template-rows: minmax(1.5em, auto) 1fr minmax(2em, auto);
   grid-template-areas:
   "nav"
   "tools"
@@ -39,12 +65,22 @@ nav > div {
   align-items: flex-start;
 }
 
-.tools {
+.input-row {
+  width: min(600px, 95%);
   grid-area: tools;
+  justify-self: center;
   display: grid;
   gap: 0.5em;
-  grid-template-columns: minmax(5em, 8em) minmax(300px, 1fr) minmax(5em, 8em);
+  grid-template-columns: minmax(320px, 1fr) 80px;
   align-items: center;
+}
+
+.input-row-interactive {
+  width: min(600px, 95%);
+  grid-area: tools;
+  justify-self: center;
+  display: grid;
+  gap: 0.5em;
 }
 
 .card {
@@ -63,6 +99,9 @@ nav > div {
     display: grid;
     gap: 0;
     grid-template-columns: auto;
+  }
+  .logo {
+    display:none;
   }
 }
 
@@ -93,7 +132,16 @@ nav > div {
   border: 1px solid black; 
 
   animation-duration: .3s;
-  animation-name: slidein;
+  animation-name: magnify;
+}
+
+.overlay-button {
+  position: fixed;
+  border-radius: 40px;
+  right: 5%;
+  bottom: 5%;
+  z-index: 5;
+  overflow: hidden;
 }
 
 @keyframes slidein {
@@ -103,5 +151,16 @@ nav > div {
 
   to {
     transform: translateY(0%);
+  }
+}
+@keyframes magnify {
+  from {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1.0);
+    opacity: 1;
   }
 }

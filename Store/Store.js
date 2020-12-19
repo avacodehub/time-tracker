@@ -44,7 +44,7 @@ const useStore = create((set) => ({
   setBeingEditProject: (project) => set({ beingEditProject: project }),
   // WATCH LIST SECTION
   setWatchList: (watchList) => set({ watchList }),
-  addWatch: (name, customId) =>
+  addWatch: ( customId, name = null) =>
     set((state) => ({
       watchList: [
         ...state.watchList,

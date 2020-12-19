@@ -1,5 +1,4 @@
-import { Text, Button, Input } from "@chakra-ui/react";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import Project from "./Project";
 import useStore from "../Store/Store";
 import EditTime from "./EditTIme";
@@ -12,8 +11,6 @@ function ProjectsList() {
   const projects = useStore((state) => state.projects);
   const activeProject = useStore((state) => state.activeProject);
   const setActiveProject = useStore((state) => state.setActiveProject);
-  const updateProject = useStore((state) => state.updateProject);
-  const setIsVisible_NewProject = useStore((state) => state.setIsVisible_NewProject);
   const setProjects = useStore((state) => state.setProjects);
 
   useEffect(() => {
@@ -39,15 +36,8 @@ function ProjectsList() {
     );
   }, [activeProject]);
 
-  const handleNewProject = () => {
-    setIsVisible_NewProject(true)
-  };
-
   return (
     <>
-      <div className="tools">
-        <Button onClick={handleNewProject}>Create new</Button>
-      </div>
       <section className="projectsGrid">
         {projects.length > 0
           ? projects.map((p) => {

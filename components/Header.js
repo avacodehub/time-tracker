@@ -1,23 +1,27 @@
 import React from "react";
 import Link from "next/link";
-import {Button} from "@chakra-ui/react"
 
 export default function Header() {
   return (
     <nav>
+      <div className="logo">
+          Time Tracker
+      </div>
+
+      
       <div>
         <Link href="/">
-          <Button variant="outline">Track Time</Button>
+          <a>Track Time</a>
         </Link>
       </div>
       <div>
         <Link href="/watch">
-        <Button variant="outline">Watch Others</Button>
+        <a>Watch Others</a>
         </Link>
       </div>
       <div>
         <Link href="/about">
-        <Button variant="outline">About Us</Button>
+        <a>About Us</a>
         </Link>
       </div>
     </nav>
