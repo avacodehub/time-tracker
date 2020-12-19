@@ -6,6 +6,8 @@ const useStore = create((set) => ({
   activeProject: null,
   beingEditProject: null,
   watchList: [],
+  isVisible_NewWatch: false,
+  isVisible_NewProject: false,
 
   setProjects: (projects) => set({ projects }),
   addProject: (name) =>
@@ -87,6 +89,10 @@ const useStore = create((set) => ({
     });
   },
   // END WATCHLIST SECTION
+
+  // UI State
+  setIsVisible_NewWatch: (isVisible_NewWatch) =>  set({ isVisible_NewWatch}),
+  setIsVisible_NewProject: (value) => set({ isVisible_NewProject: value }),
 }));
 
 export default useStore;
