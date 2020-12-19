@@ -33,7 +33,8 @@ export default function EditTime() {
   return (
     <>
       {!isVisible ? null : (
-        <div>
+        <div className="overlay">
+          <div className="overlay-content">
           <h1>Edit time</h1>
           <Formik
             initialValues={{ hours: hours, minutes: minutes }}
@@ -89,7 +90,7 @@ export default function EditTime() {
                     </FormControl>
                   )}
                 </Field>
-                <Flex justifyContent="space-around" mt={4}>
+                <Flex justifyContent="flex-end" mt={4}>
                   <Button
                     type="submit"
                     colorScheme="blue"
@@ -109,6 +110,7 @@ export default function EditTime() {
               </Form>
             )}
           </Formik>
+          </div>
         </div>
       )}
     </>
