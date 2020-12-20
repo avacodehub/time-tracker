@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   Flex,
+  Text
 } from "@chakra-ui/react";
 
 export default function EditTime() {
@@ -19,11 +20,16 @@ export default function EditTime() {
 
   let duration = 0,
     hours = 0,
-    minutes = 0;
+    minutes = 0,
+    name = "",
+    customId = "";
   if (beingEditProject) {
     duration = beingEditProject.time;
     hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
     minutes = Math.floor((duration / (1000 * 60)) % 60);
+
+    name = beingEditProject.name ? beingEditProject.name : ""
+    customId = beingEditProject.customId ? beingEditProject.customId : ""
   }
 
   useEffect(() => {
@@ -40,9 +46,14 @@ export default function EditTime() {
       {!isVisible ? null : (
         <div className="overlay">
           <div className="overlay-content">
-            <h1>Edit time</h1>
+            <Text fontSize="lg" align="center">Manage Project/Activity</Text>
             <Formik
-              initialValues={{ hours: hours, minutes: minutes }}
+              initialValues={{
+                hours: hours,
+                minutes: minutes,
+                name: name,
+                customId: customId,
+              }}
               validate={(values) => {
                 const errors = {};
                 if (values.minutes > 59) {
@@ -53,7 +64,12 @@ export default function EditTime() {
               onSubmit={(values, { setSubmitting }) => {
                 const newTime =
                   values.hours * 60 * 60 * 1000 + values.minutes * 60 * 1000;
-                const editedProject = { ...beingEditProject, time: newTime };
+                const editedProject = {
+                  ...beingEditProject,
+                  time: newTime,
+                  name: values.name,
+                  customId: values.customId,
+                };
                 updateProject(editedProject);
 
                 setSubmitting(false);
@@ -93,6 +109,44 @@ export default function EditTime() {
                         />
                         <FormErrorMessage>
                           {form.errors.minutes}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Field type="text" name="name">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.name && form.touched.name}
+                      >
+                        <FormLabel htmlFor="name">Name</FormLabel>
+                        <Input
+                          {...field}
+                          id="name"
+                          placeholder="Name"
+                          autoComplete="off"
+                        />
+                        <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+
+                  <Field type="text" name="customId">
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={
+                          form.errors.customId && form.touched.customId
+                        }
+                      >
+                        <FormLabel htmlFor="customId">Custom ID</FormLabel>
+                        <Input
+                          {...field}
+                          id="customId"
+                          placeholder="Custom ID"
+                          autoComplete="off"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.customId}
                         </FormErrorMessage>
                       </FormControl>
                     )}
