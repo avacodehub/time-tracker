@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import useStore from "../Store/Store";
 import { Formik, Form, Field } from "formik";
 import {
@@ -36,15 +36,34 @@ export default function EditTime() {
     if (beingEditProject) setIsVisible(true);
   }, [beingEditProject]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
+
+  const escFunction = useCallback((event) => {
+    if(event.keyCode === 27) {
+      handleCancel();
+    }
+  }, []);
   function handleCancel() {
     setBeingEditProject(null);
     setIsVisible(false);
   }
 
+  const handleClickOverlay = (event) => {
+    if (event.target.id === "edit-overlay") {
+      handleCancel()
+    }
+  };
+
   return (
     <>
       {!isVisible ? null : (
-        <div className="overlay">
+        <div id="edit-overlay" className="overlay" onClick={handleClickOverlay}>
           <div className="overlay-content">
             <Text fontSize="lg" align="center">Manage Project/Activity</Text>
             <Formik
