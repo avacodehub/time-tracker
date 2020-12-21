@@ -61,7 +61,7 @@ nav > div:nth-child(2) {
 
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   align-items: flex-start;
 }
 
@@ -87,6 +87,9 @@ nav > div:nth-child(2) {
   border: 1px solid teal;
   border-radius: 1rem;
   padding: 1em
+}
+.card:hover {
+  box-shadow: 0 0 4px gray;
 }
 
 @media (max-width: 600px){
@@ -131,7 +134,7 @@ nav > div:nth-child(2) {
   border-radius: 10px;
   border: 1px solid black; 
 
-  animation-duration: .3s;
+  animation-duration: .2s;
   animation-name: magnify;
 }
 
@@ -159,7 +162,7 @@ nav > div:nth-child(2) {
 }
 @keyframes magnify {
   from {
-    transform: scale(1.5);
+    transform: scale(.7);
     opacity: 0;
   }
 

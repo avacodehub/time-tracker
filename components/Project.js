@@ -5,9 +5,11 @@ import {
   Flex,
   Text,
   Button,
+  IconButton,
   Heading,
   ButtonGroup,
 } from "@chakra-ui/react";
+import {  EditIcon, DeleteIcon } from '@chakra-ui/icons'
 
 function Project(props) {
   const { project } = props;
@@ -19,6 +21,7 @@ function Project(props) {
   const setBeingEditProject = useStore((state) => state.setBeingEditProject);
 
   const [sessionTime, setSessionTime] = useState(0);
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
   function handleEdit() {
     setBeingEditProject(project);
@@ -86,27 +89,30 @@ function Project(props) {
 
   return (
     <div className="card">
-      <Box>
-        <Text fontSize="sm">Project Name:</Text>
-        <Heading fontSize="3xl">{project.name}</Heading>
+      <Box  onClick={handleEdit}>
+        <Heading fontSize="xl">{project.name}</Heading>
 
         {/* <Text>OrderedBy</Text>
         <Text>{orderedBy}</Text> */}
 
         <Text mt={4}>Time:</Text>
-        <Heading as="h1">
+        <Heading fontSize="4xl" as="h1">
           {msToTime(
             project.isRunning ? project.time + sessionTime : project.time
           )}
         </Heading>
+        <Text mt={2}>Date created:</Text>
+        <Heading fontSize="md">
+          {new Date(project.dateCreated).toLocaleDateString("en-GB",dateOptions)}
+        </Heading>
       </Box>
       <Flex mt={4} justifyContent="space-between">
-        <Button size="sm" colorScheme={project.isRunning ? "red" : "teal"} onClick={handleStartStop}>
+        <Button size="sm" colorScheme={project.isRunning ? "red" : "purple"} onClick={handleStartStop}>
           {project.isRunning ? "STOP" : "START"}
         </Button>
         <ButtonGroup size="sm" isAttached variant="outline">
-          <Button onClick={handleEdit}>EDIT TIME</Button>
-          <Button onClick={handleDelete}>DELETE</Button>
+          <IconButton title="Manage project" onClick={handleEdit} icon={<EditIcon />} />
+          <IconButton title="Delete project" onClick={handleDelete} icon={<DeleteIcon />} />
         </ButtonGroup>
       </Flex>
     </div>

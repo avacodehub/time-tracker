@@ -13,7 +13,6 @@ const useStore = create((set) => ({
   addProject: (name, customId = null) =>
     set((state) => ({
       projects: [
-        ...state.projects,
         {
           id: uuidv4(),
           name,
@@ -22,6 +21,7 @@ const useStore = create((set) => ({
           dateCreated: Date.now(),
           isRunning: false,
         },
+        ...state.projects
       ],
     })),
   updateProject: (project) =>
