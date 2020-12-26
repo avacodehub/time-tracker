@@ -8,7 +8,8 @@ import {
   Input,
   Button,
   Flex,
-  Text
+  Text,
+  ButtonGroup,
 } from "@chakra-ui/react";
 
 export default function EditTime() {
@@ -28,8 +29,8 @@ export default function EditTime() {
     hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
     minutes = Math.floor((duration / (1000 * 60)) % 60);
 
-    name = beingEditProject.name ? beingEditProject.name : ""
-    customId = beingEditProject.customId ? beingEditProject.customId : ""
+    name = beingEditProject.name ? beingEditProject.name : "";
+    customId = beingEditProject.customId ? beingEditProject.customId : "";
   }
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function EditTime() {
   }, []);
 
   const escFunction = useCallback((event) => {
-    if(event.keyCode === 27) {
+    if (event.keyCode === 27) {
       handleCancel();
     }
   }, []);
@@ -56,7 +57,7 @@ export default function EditTime() {
 
   const handleClickOverlay = (event) => {
     if (event.target.id === "edit-overlay") {
-      handleCancel()
+      handleCancel();
     }
   };
 
@@ -65,7 +66,9 @@ export default function EditTime() {
       {!isVisible ? null : (
         <div id="edit-overlay" className="overlay" onClick={handleClickOverlay}>
           <div className="overlay-content">
-            <Text fontSize="lg" align="center">Manage Project/Activity</Text>
+            <Text fontSize="lg" align="center">
+              Manage Project/Activity
+            </Text>
             <Formik
               initialValues={{
                 hours: hours,
@@ -171,21 +174,22 @@ export default function EditTime() {
                     )}
                   </Field>
                   <Flex justifyContent="flex-end" mt={4}>
-                    <Button
-                      type="submit"
-                      colorScheme="blue"
-                      isDisabled={isSubmitting}
-                    >
-                      Submit
-                    </Button>
-                    <Button
-                      onClick={handleCancel}
-                      colorScheme="red"
-                      variant="outline"
-                      isDisabled={isSubmitting}
-                    >
-                      Cancel
-                    </Button>
+                    <ButtonGroup variant="outline">
+                      <Button
+                        type="submit"
+                        colorScheme="blue"
+                        isDisabled={isSubmitting}
+                      >
+                        Submit
+                      </Button>
+                      <Button
+                        onClick={handleCancel}
+                        colorScheme="red"
+                        isDisabled={isSubmitting}
+                      >
+                        Cancel
+                      </Button>
+                    </ButtonGroup>
                   </Flex>
                 </Form>
               )}
