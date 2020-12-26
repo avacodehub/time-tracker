@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Project from "./Project";
 import useStore from "../Store/Store";
-import EditTime from "./EditTIme";
+import EditTime from "./EditTime";
 import NewProject from "./NewProject";
 
 const LOCAL_STORAGE_KEY_PROJECTS = "0projecttracker_projects";
